@@ -1,7 +1,10 @@
 const { ethers } = require("ethers");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 async function main() {
-    const rpcUrl = "https://ethereum-sepolia-rpc.publicnode.com";
+    const rpcUrl = process.env.ETHEREUM_RPC_URL;
 
     const provider = new ethers.JsonRpcProvider(rpcUrl);
 

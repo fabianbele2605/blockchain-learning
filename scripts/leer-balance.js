@@ -1,8 +1,11 @@
 const { ethers } = require("ethers");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 async function main() {
-    const rpcUrl = "https://ethereum-sepolia-rpc.publicnode.com";
-    const walletAddress = "0x85C1E503284ed6E90fed3999a4053D4585C93dcA";
+    const rpcUrl = process.env.ETHEREUM_RPC_URL;
+    const walletAddress = process.env.WALLET_RECEIVE_ETHEREUM_ADDRESS;
 
     const provider = new ethers.JsonRpcProvider(rpcUrl);
 
