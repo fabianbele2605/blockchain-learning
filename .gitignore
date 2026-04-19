@@ -1,0 +1,22 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Logs
+*.log
+
+# Env files
+.env
+.env.*
+
+# Dependencies
+node_modules/
+
+# Rust
+target/
+
+# Build artifacts
+dist/
+build/
+.cache/
