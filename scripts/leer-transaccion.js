@@ -4,21 +4,33 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 async function main() {
-    const rpcUrl = process.env.ETHEREUM_RPC_URL;
-    const txHash = "0x102d6073b8f7b779d42c9a4b6255fd3b96a673c8732eec2b31fb99383d3429a2";
+  const rpcUrl = process.env.ETHEREUM_RPC_URL;
+  const txHash = process.argv[2];
 
-    const provider = new ethers.JsonRpcProvider(rpcUrl);
+  if (!txHash) {
+    console.log("Uso: node scripts/leer-transaccion.js <txHash>");
+    process.exit(1);
+  }
 
-    const tx = await provider.getTransaction(txHash);
+  const provider = new ethers.JsonRpcProvider(rpcUrl);
+  const tx = await provider.getTransaction(txHash);
 
-    console.log("Hash:", tx.hash);
-    console.log("Desde:", tx.from);
-    console.log("hacia:", tx.to);
-    console.log("Valor en wei:", tx.value.toString());
-    console.log("Valor en ETH:", ethers.formatEther(tx.value));
-    console.log("Nonce:", tx.nonce);
+  if (!tx) {
+    console.log("No se encontro la transaccion:", txHash);
+    process.exit(1);
+  }
+
+  console.log("Hash:", tx.hash);
+  console.log("Desde:", tx.from);
+  console.log("Hacia:", tx.to);
+  console.log("Valor (wei):", tx.value.toString());
+  console.log("Valor (ETH):", ethers.formatEther(tx.value));
+  console.log("Nonce:", tx.nonce);
+  console.log("Tipo:", tx.type);
+  console.log("Bloque:", tx.blockNumber ?? "pendiente");
+  console.log("GasLimit:", tx.gasLimit?.toString?.() ?? "N/A");
 }
 
 main().catch((error) => {
-    console.error("Error al leer la transacción:", error);
+  console.error("Error al leer la transaccion:", error);
 });
